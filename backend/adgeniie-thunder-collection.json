@@ -1,0 +1,77 @@
+{
+  "name": "Adgeniie Backend",
+  "requests": [
+    {
+      "name": "GET All Leads",
+      "method": "GET",
+      "url": "http://localhost:5000/api/leads",
+      "headers": [
+        { "key": "Content-Type", "value": "application/json" }
+      ]
+    },
+    {
+      "name": "POST Create Lead",
+      "method": "POST",
+      "url": "http://localhost:5000/api/leads",
+      "headers": [
+        { "key": "Content-Type", "value": "application/json" }
+      ],
+      "body": {
+        "type": "json",
+        "raw": {
+          "name": "Durga Prasad",
+          "email": "durga@example.com",
+          "message": "Testing Thunder Client!"
+        }
+      }
+    },
+    {
+      "name": "GET All Projects",
+      "method": "GET",
+      "url": "http://localhost:5000/api/projects",
+      "headers": [
+        { "key": "Content-Type", "value": "application/json" }
+      ]
+    },
+    {
+      "name": "POST Create Project",
+      "method": "POST",
+      "url": "http://localhost:5000/api/projects",
+      "headers": [
+        { "key": "Content-Type", "value": "application/json" }
+      ],
+      "body": {
+        "type": "json",
+        "raw": {
+          "title": "New Digital Board Project",
+          "location": "Hyderabad",
+          "status": "active"
+        }
+      }
+    },
+    {
+      "name": "GET All Sections",
+      "method": "GET",
+      "url": "http://localhost:5000/api/sections",
+      "headers": [
+        { "key": "Content-Type", "value": "application/json" }
+      ]
+    },
+    {
+      "name": "POST Create Section",
+      "method": "POST",
+      "url": "http://localhost:5000/api/sections",
+      "headers": [
+        { "key": "Content-Type", "value": "application/json" }
+      ],
+      "body": {
+        "type": "json",
+        "raw": {
+          "name": "Highway Billboard Zone",
+          "type": "outdoor",
+          "capacity": 10
+        }
+      }
+    }
+  ]
+}
