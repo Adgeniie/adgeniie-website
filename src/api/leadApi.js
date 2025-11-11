@@ -59,15 +59,17 @@ const makeIdempotencyKey = () =>
 ------------------ */
 
 // Create a new lead
+// src/api/leadApi.js
 export const createLead = async (leadData) => {
-  const payload = sanitize(leadData);
-  const { data } = await api.post("/leads", payload, {
-    headers: {
-      "X-Idempotency-Key": makeIdempotencyKey(),
-    },
+  const baseURL = import.meta.env.VITE_API_BASE_URL || "";
+  const response = await fetch(`${baseURL}/api/leads`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(leadData),
   });
-  return data;
+  return response.json();
 };
+
 
 // Get all leads
 export const getLeads = async (params = {}) => {
