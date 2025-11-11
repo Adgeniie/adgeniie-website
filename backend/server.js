@@ -2,6 +2,8 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
 import connectDB from "./config/db.js";
 
 // Routes
@@ -17,7 +19,11 @@ connectDB();
 
 const app = express();
 
-// ✅ CORS Setup (for Vercel/Netlify frontend)
+// ✅ Get directory path
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// ✅ CORS Setup (for any domain, or limit if needed)
 app.use(cors({
   origin: process.env.ALLOWED_ORIGINS?.split(",") || "*",
   methods: ["GET", "POST", "PUT", "DELETE"],
@@ -27,20 +33,10 @@ app.use(cors({
 // ✅ Body parser
 app.use(express.json());
 
-// ✅ Debug: log each incoming request
+// ✅ Debug log for each request
 app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
   next();
-});
-
-// ✅ Root Welcome Route
-app.get("/", (req, res) => {
-  res.json({ success: true, message: "Adgeniie Backend is Live 🚀" });
-});
-
-// ✅ Liveness Check
-app.get("/ping", (req, res) => {
-  res.json({ ok: true, message: "PONG ✅ Backend is running fine" });
 });
 
 // ✅ API Routes
@@ -53,9 +49,18 @@ console.log("✅ Mounted /api/leads");
 app.use("/api/sections", sectionRoutes);
 console.log("✅ Mounted /api/sections");
 
-// ✅ 404 Handler
-app.use((req, res) => {
-  res.status(404).json({ success: false, message: "Route not found ❌" });
+// ✅ Serve frontend (Vite build folder)
+app.use(express.static(path.join(__dirname, "../dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../dist", "index.html"));
+});
+
+// ✅ 404 Handler (only for API routes, after frontend catch-all)
+app.use((req, res, next) => {
+  if (req.originalUrl.startsWith("/api/")) {
+    return res.status(404).json({ success: false, message: "API route not found ❌" });
+  }
+  next();
 });
 
 // ✅ Error Handler
