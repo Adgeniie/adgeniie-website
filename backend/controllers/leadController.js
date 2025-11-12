@@ -6,6 +6,7 @@ import { sendLeadEmail, sendCustomerEmail } from "../utils/emailService.js";
 export const createLead = async (req, res, next) => {
   try {
     const { name, email, phone, message } = req.body;
+console.log("📩 Incoming form data:", req.body);
 
     // ✅ Save lead to MongoDB
     const newLead = await Lead.create({ name, email, phone, message });
@@ -16,7 +17,8 @@ export const createLead = async (req, res, next) => {
     try {
       await sendLeadEmail({ name, email, phone, message });
       if (email) {
-        await sendCustomerEmail({ name, email });
+        await sendCustomerEmail({ name, email, phone, message });
+
       }
       console.log(`✅ Emails sent successfully for: ${name}`);
     } catch (mailError) {

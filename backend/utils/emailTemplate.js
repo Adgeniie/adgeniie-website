@@ -9,21 +9,8 @@
 // Color palette: white / gray / purple (accent) — clean and readable.
 
 const safe = (v) => (v === undefined || v === null ? "" : String(v));
-
-export const customerTemplate = (leadOrName, maybeMessage, maybePhone, maybeEmail) => {
-  // Support either object or params
-  let name, message, phone, email;
-  if (typeof leadOrName === "object" && leadOrName !== null) {
-    name = safe(leadOrName.name);
-    message = safe(leadOrName.message);
-    phone = safe(leadOrName.phone);
-    email = safe(leadOrName.email);
-  } else {
-    name = safe(leadOrName);
-    message = safe(maybeMessage);
-    phone = safe(maybePhone);
-    email = safe(maybeEmail);
-  }
+export const customerTemplate = (lead) => {
+  const { name = "", email = "", phone = "", message = "" } = lead || {};
 
   // Minimal plaintext fallback
   const plainText = `Thanks ${name} — we received your message.
@@ -74,7 +61,7 @@ We will get back to you soon. — Adgeniie`;
                 <td class="card">
                   <!-- Header -->
                   <div class="header">
-                    <img src="https://i.ibb.co/4RZ9CHM/adgeniie-logo.png" alt="Adgeniie Logo" />
+                    <img src="https://adgeniie.com/logo.png" alt="Adgeniie Logo" />
                     <h1>Adgeniie</h1>
                   </div>
 
@@ -113,65 +100,6 @@ We will get back to you soon. — Adgeniie`;
       <!-- Plain text fallback -->
       <div style="display:none; opacity:0; height:0; width:0; overflow:hidden;">
         ${plainText}
-      </div>
-    </body>
-  </html>
-  `;
-};
-
-// ✅ Admin template stays the same (not touched)
-export const adminTemplate = (leadOrName, maybeEmail, maybePhone, maybeMessage) => {
-  let name, email, phone, message;
-  if (typeof leadOrName === "object" && leadOrName !== null) {
-    name = safe(leadOrName.name);
-    email = safe(leadOrName.email);
-    phone = safe(leadOrName.phone);
-    message = safe(leadOrName.message);
-  } else {
-    name = safe(leadOrName);
-    email = safe(maybeEmail);
-    phone = safe(maybePhone);
-    message = safe(maybeMessage);
-  }
-
-  return `
-  <!doctype html>
-  <html>
-    <head>
-      <meta charset="utf-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-      <title>New Lead — Adgeniie</title>
-      <style>
-        body { margin:0; padding:0; font-family: Arial, Helvetica, sans-serif; background:#f4f4f6; color:#222; }
-        .wrap { max-width:700px; margin:20px auto; padding:18px; }
-        .card { background:#fff; border-radius:10px; padding:18px; border:1px solid #efe8ff; box-shadow:0 8px 24px rgba(106,13,173,0.06); }
-        h2 { margin:0 0 10px; color:#6a0dad; }
-        p { margin:8px 0; color:#333; font-size:14px; line-height:1.5; }
-        table { width:100%; border-collapse:collapse; margin-top:12px; }
-        td { padding:10px; border:1px solid #f1eff8; vertical-align:top; font-size:14px; color:#333; }
-        .label { background:#fbf7ff; color:#6a0dad; font-weight:700; width:140px; }
-        .meta { font-size:12px; color:#6b7280; margin-top:12px; }
-        .footer { margin-top:18px; font-size:12px; color:#6b7280; }
-        @media screen and (max-width:480px) {
-          .wrap { padding:12px; }
-          td { font-size:13px; padding:8px; }
-        }
-      </style>
-    </head>
-    <body>
-      <div class="wrap">
-        <div class="card">
-          <h2>📩 New Lead Received</h2>
-          <p>A new contact form submission was received on <strong>Adgeniie</strong>.</p>
-          <table role="presentation">
-            <tr><td class="label">Name</td><td>${name || "—"}</td></tr>
-            <tr><td class="label">Email</td><td>${email || "—"}</td></tr>
-            <tr><td class="label">Phone</td><td>${phone || "N/A"}</td></tr>
-            <tr><td class="label">Message</td><td>${message || "—"}</td></tr>
-          </table>
-          <div class="meta">Submitted at: ${new Date().toLocaleString()}</div>
-          <div class="footer">This is an automated notification from Adgeniie website.</div>
-        </div>
       </div>
     </body>
   </html>
