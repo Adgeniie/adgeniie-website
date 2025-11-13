@@ -106,12 +106,99 @@
 //   `;
 // };
 
-// backend/utils/emailTemplate.js
+
+
+
+
+
+
+
+
+
+
+
+
+// // backend/utils/emailTemplate.js
+
+// const safe = (v) => (v === undefined || v === null ? "" : String(v));
+
+// /* ===========================================
+//    CUSTOMER TEMPLATE
+// =========================================== */
+// export const customerTemplate = (lead) => {
+//   const name = safe(lead?.name);
+//   const email = safe(lead?.email);
+//   const phone = safe(lead?.phone);
+//   const message = safe(lead?.message);
+
+//   const plainText = `Thanks ${name} — we received your message.
+// Message: ${message}
+// Email: ${email}
+// Phone: ${phone}
+// We will get back to you soon. — Adgeniie`;
+
+//   return `
+//   <!doctype html>
+//   <html>
+//     <body style="font-family: Arial; background:#f9fafb; padding:20px;">
+//       <div style="max-width:600px;margin:auto;background:#fff;padding:20px;border-radius:10px;">
+//         <h2>Thank you, ${name}</h2>
+//         <p>We have received your message.</p>
+
+//         <blockquote style="background:#f3f3f3;padding:10px;border-left:4px solid purple;">
+//           ${message || "No message provided."}
+//         </blockquote>
+
+//         <h3>Contact Details</h3>
+//         <p>Email: ${email || "N/A"}</p>
+//         <p>Phone: ${phone || "N/A"}</p>
+
+//         <p>We will contact you shortly.<br/>– Adgeniie Team</p>
+//       </div>
+
+//       <div style="display:none;">${plainText}</div>
+//     </body>
+//   </html>
+//   `;
+// };
+
+// /* ===========================================
+//    ADMIN TEMPLATE
+// =========================================== */
+// export const adminTemplate = (lead) => {
+//   const name = safe(lead?.name);
+//   const email = safe(lead?.email);
+//   const phone = safe(lead?.phone);
+//   const message = safe(lead?.message);
+
+//   return `
+//   <!doctype html>
+//   <html>
+//     <body style="font-family: Arial; background:#f4f4f4; padding:20px;">
+//       <div style="max-width:600px;margin:auto;background:#fff;padding:20px;border-radius:10px;">
+//         <h2>📩 New Lead Received</h2>
+
+//         <p><strong>Name:</strong> ${name}</p>
+//         <p><strong>Email:</strong> ${email}</p>
+//         <p><strong>Phone:</strong> ${phone}</p>
+//         <p><strong>Message:</strong> ${message}</p>
+
+//         <p>Submitted at: ${new Date().toLocaleString()}</p>
+//       </div>
+//     </body>
+//   </html>
+//   `;
+// };
+
+
+
+
+
 
 const safe = (v) => (v === undefined || v === null ? "" : String(v));
 
 /* ===========================================
-   CUSTOMER TEMPLATE
+   CUSTOMER TEMPLATE (RESTORED UI)
 =========================================== */
 export const customerTemplate = (lead) => {
   const name = safe(lead?.name);
@@ -119,39 +206,71 @@ export const customerTemplate = (lead) => {
   const phone = safe(lead?.phone);
   const message = safe(lead?.message);
 
-  const plainText = `Thanks ${name} — we received your message.
+  const plainText = `Thanks ${name}, we received your message.
 Message: ${message}
 Email: ${email}
-Phone: ${phone}
-We will get back to you soon. — Adgeniie`;
+Phone: ${phone}`;
 
   return `
   <!doctype html>
   <html>
-    <body style="font-family: Arial; background:#f9fafb; padding:20px;">
-      <div style="max-width:600px;margin:auto;background:#fff;padding:20px;border-radius:10px;">
-        <h2>Thank you, ${name}</h2>
-        <p>We have received your message.</p>
+    <head>
+      <meta charset="UTF-8" />
+      <title>Thank you — Adgeniie</title>
+    </head>
+    <body style="margin:0;padding:0;background:#f9fafb;font-family:Arial,Helvetica,sans-serif;">
 
-        <blockquote style="background:#f3f3f3;padding:10px;border-left:4px solid purple;">
-          ${message || "No message provided."}
-        </blockquote>
+      <div style="max-width:640px;margin:20px auto;background:#ffffff;border-radius:12px;overflow:hidden;
+      box-shadow:0 2px 8px rgba(0,0,0,0.08);">
 
-        <h3>Contact Details</h3>
-        <p>Email: ${email || "N/A"}</p>
-        <p>Phone: ${phone || "N/A"}</p>
+        <!-- HEADER -->
+        <div style="background:linear-gradient(90deg,#6a0dad 0%, #9b30ff 100%);
+        padding:24px;text-align:center;color:white;">
+          <h1 style="margin:0;font-size:24px;">Adgeniie</h1>
+        </div>
 
-        <p>We will contact you shortly.<br/>– Adgeniie Team</p>
+        <!-- BODY -->
+        <div style="padding:28px;color:#111827;font-size:15px;line-height:1.7;">
+          <h2 style="margin-top:0;color:#111;">Hi ${name || "there"},</h2>
+          <p>Thanks for reaching out to <strong>Adgeniie</strong>. We have received your message.</p>
+
+          <div style="margin:20px 0;padding:14px;border-left:4px solid #6a0dad;background:#faf5ff;
+          font-style:italic;color:#444;border-radius:6px;">
+            "${message || "No message provided."}"
+          </div>
+
+          <div style="background:#f8f7ff;border:1px solid #e5e1ff;padding:14px;border-radius:8px;">
+            <strong>Contact Details</strong><br/>
+            <span>Email:</span> ${email || "N/A"}<br/>
+            <span>Phone:</span> ${phone || "N/A"}
+          </div>
+
+          <p style="margin-top:25px;text-align:center;">
+            <a href="https://adgeniie.com" style="
+              display:inline-block;
+              background:linear-gradient(90deg,#6a0dad,#9b30ff);
+              padding:12px 22px;
+              color:white;
+              text-decoration:none;
+              border-radius:30px;
+            ">Visit Adgeniie</a>
+          </p>
+        </div>
+
+        <!-- FOOTER -->
+        <div style="text-align:center;padding:16px;background:#f3f3f3;color:#777;font-size:12px;">
+          © ${new Date().getFullYear()} Adgeniie — All Rights Reserved
+        </div>
       </div>
 
       <div style="display:none;">${plainText}</div>
     </body>
-  </html>
-  `;
+  </html>`;
 };
 
+
 /* ===========================================
-   ADMIN TEMPLATE
+   ADMIN TEMPLATE (RESTORED UI)
 =========================================== */
 export const adminTemplate = (lead) => {
   const name = safe(lead?.name);
@@ -162,18 +281,36 @@ export const adminTemplate = (lead) => {
   return `
   <!doctype html>
   <html>
-    <body style="font-family: Arial; background:#f4f4f4; padding:20px;">
-      <div style="max-width:600px;margin:auto;background:#fff;padding:20px;border-radius:10px;">
-        <h2>📩 New Lead Received</h2>
+    <body style="font-family:Arial,Helvetica,sans-serif;background:#f4f4f6;padding:20px;">
+      <div style="max-width:700px;margin:auto;background:#fff;padding:20px;border-radius:10px;
+      border:1px solid #efe8ff;box-shadow:0 6px 18px rgba(106,13,173,0.08);">
 
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Phone:</strong> ${phone}</p>
-        <p><strong>Message:</strong> ${message}</p>
+        <h2 style="color:#6a0dad;margin-top:0;">📩 New Lead Received</h2>
+        <p>A new contact form submission has been received from your website.</p>
 
-        <p>Submitted at: ${new Date().toLocaleString()}</p>
+        <table width="100%" style="border-collapse:collapse;margin-top:15px;">
+          <tr>
+            <td style="background:#faf5ff;border:1px solid #e5e1ff;padding:10px;font-weight:bold;color:#6a0dad;width:120px;">Name</td>
+            <td style="border:1px solid #e5e1ff;padding:10px;">${name}</td>
+          </tr>
+          <tr>
+            <td style="background:#faf5ff;border:1px solid #e5e1ff;padding:10px;font-weight:bold;color:#6a0dad;">Email</td>
+            <td style="border:1px solid #e5e1ff;padding:10px;">${email}</td>
+          </tr>
+          <tr>
+            <td style="background:#faf5ff;border:1px solid #e5e1ff;padding:10px;font-weight:bold;color:#6a0dad;">Phone</td>
+            <td style="border:1px solid #e5e1ff;padding:10px;">${phone}</td>
+          </tr>
+          <tr>
+            <td style="background:#faf5ff;border:1px solid #e5e1ff;padding:10px;font-weight:bold;color:#6a0dad;">Message</td>
+            <td style="border:1px solid #e5e1ff;padding:10px;">${message}</td>
+          </tr>
+        </table>
+
+        <p style="color:#777;font-size:12px;margin-top:15px;">
+          Submitted at: ${new Date().toLocaleString()}
+        </p>
       </div>
     </body>
-  </html>
-  `;
+  </html>`;
 };
