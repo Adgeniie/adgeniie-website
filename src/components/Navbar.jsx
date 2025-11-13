@@ -148,13 +148,14 @@ const Navbar = () => {
       </header>
 
       {/* MOBILE MENU OVERLAY */}
-      {isMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
-          onClick={() => setIsMenuOpen(false)} // close when tapping outside
-        >
+   {isMenuOpen && (
+  <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[60]"
+    onClick={() => setIsMenuOpen(false)} // close when tapping outside
+  >
+
           {/* MENU PANEL */}
           <motion.div
             initial={{ x: "100%" }}
