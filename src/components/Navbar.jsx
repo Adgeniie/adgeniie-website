@@ -121,7 +121,12 @@ const Navbar = () => {
   return (
     <>
       {/* NAVBAR */}
-      <header className="fixed top-0 left-0 w-full bg-white/80 backdrop-blur-md shadow-sm z-50">
+    <header
+  className={`fixed top-0 left-0 w-full bg-white/80 backdrop-blur-md shadow-sm z-50 ${
+    isMenuOpen ? "pointer-events-none" : ""
+  }`}
+>
+
         <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
 
           {/* Logo */}
