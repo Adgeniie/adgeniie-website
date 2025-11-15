@@ -152,7 +152,7 @@ const Navbar = () => {
   <motion.div
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
-    className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[60]"
+    className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[99999]"
     onClick={() => setIsMenuOpen(false)} // close when tapping outside
   >
 
